@@ -8,6 +8,21 @@ const Queue = require('../lib/Queue')
 
 function processReturns(queue) {
   // your code here
+  let tempQueue = new Queue()
+  while (!queue.isEmpty()) {
+    let currentFirstElem = queue.dequeue()
+    let totalDelete = 0
+    for (let i = 0; i < currentFirstElem.books.length; i ++) {
+      totalDelete += currentFirstElem.books[i].daysLate
+    }
+    if (totalDelete > 0) {
+      tempQueue.enqueue(currentFirstElem)
+    }
+  }
+
+  while (!tempQueue.isEmpty()) {
+    queue.enqueue(tempQueue.dequeue())
+  }
 }
 
 const returns = new Queue();
